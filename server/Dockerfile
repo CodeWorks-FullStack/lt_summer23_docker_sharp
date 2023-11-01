@@ -21,7 +21,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 WORKDIR /app/server
 
 # Copy everything
-COPY *.csproj ./
+COPY server/*.csproj ./
 
 # Restore as distinct layers
 RUN dotnet restore
