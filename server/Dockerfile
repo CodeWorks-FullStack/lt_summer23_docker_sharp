@@ -17,15 +17,17 @@ COPY client ./
 RUN npm run build
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
-WORKDIR /app
+
+WORKDIR /app/server
 
 # Copy everything
 COPY *.csproj ./
 
 # Restore as distinct layers
 RUN dotnet restore
-COPY . ./
-COPY --from=client-builder /app/client/docs /app/wwwroot
+
+COPY server ./
+COPY --from=client-builder /app/client/docs /app/server/wwwroot
 
 # Build and publish a release
 RUN dotnet publish -c Release -o out
